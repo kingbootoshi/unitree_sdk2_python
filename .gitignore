@@ -37,3 +37,6 @@ __pycache__
 
 # python
 dist/
+
+venv/
+test_logs/
