@@ -1,5 +1,5 @@
 from threading import Condition
-from typing import Any
+from typing import Any, Optional
 from enum import Enum
 
 """
@@ -30,14 +30,14 @@ class FutureResult:
 class Future:
     def __init__(self):
         self.__state = FutureState.DEFER
-        self.__msg = None
+        self.__msg: str = ""
         self.__condition = Condition()
     
-    def GetResult(self, timeout: float = None):
+    def GetResult(self, timeout: Optional[float] = None):
         with self.__condition:
             return self.__WaitResult(timeout)
 
-    def Wait(self, timeout: float = None):
+    def Wait(self, timeout: Optional[float] = None):
         with self.__condition:
             return self.__Wait(timeout)
 
@@ -53,7 +53,7 @@ class Future:
             self.__condition.notify()
             return fail
 
-    def __Wait(self, timeout: float = None):
+    def __Wait(self, timeout: Optional[float] = None):
         if not self.__IsDeferred():
             return True
         try:
@@ -65,7 +65,7 @@ class Future:
             print("[Future] future wait error")
             return False
 
-    def __WaitResult(self, timeout: float = None):
+    def __WaitResult(self, timeout: Optional[float] = None):
         if not self.__Wait(timeout):
             return FutureResult(FutureResult.FUTURE_ERR_TIMEOUT, "future wait timeout")
 

@@ -22,3 +22,8 @@ ROBOT_API_ID_AUDIO_SET_RGB_LED = 1010
 """
 " error code
 """
+
+"""
+" topic name for ASR results
+"""
+AUDIO_ASR_TOPIC_NAME = "rt/audio_msg"
